@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RestNotes.Models
 {
-    public class NotesListContext
+    public class NotesListContext : INotesContext
     {
         readonly List<Note> notes = new List<Note>();
 

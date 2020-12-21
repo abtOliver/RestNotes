@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using RestNotes.Models;
 
 namespace RestNotes
 {
@@ -34,6 +36,8 @@ namespace RestNotes
         {
             services.AddControllers();
 
+            ConfigureNotesContextService(services);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestNotes", Version = "v1" });
@@ -51,6 +55,11 @@ namespace RestNotes
         {
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestNotes v1"));
+        }
+
+        private static void ConfigureNotesContextService(IServiceCollection services)
+        {
+            services.TryAddSingleton(typeof(INotesContext), typeof(NotesListContext));
         }
     }
 }
