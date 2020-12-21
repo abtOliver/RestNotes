@@ -13,5 +13,14 @@ namespace RestNotes.Models
         {
             return notes;
         }
+
+        public Note AddNote(Note note)
+        {
+            notes.Add(note);
+
+            note.Id = notes.IndexOf(note) + 1;
+
+            return note;
+        }
     }
 }

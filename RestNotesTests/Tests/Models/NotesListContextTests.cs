@@ -19,5 +19,31 @@ namespace RestNotesTests.Tests.Models
 
             CollectionAssert.AreEqual(expectedEmpty, actualNotes.ToList());
         }
+
+        [TestMethod]
+        public void GivenNewNotesListContext_AddNote_ShouldAddTheNote_SoThatGetNotesReturnsIt()
+        {
+            var expectedNote = new Note();
+
+            var context = new NotesListContext();
+
+            context.AddNote(expectedNote);
+
+            var actualNotes = context.ListAllNotes();
+
+            CollectionAssert.Contains(actualNotes.ToList(), expectedNote);
+        }
+
+        [TestMethod]
+        public void GivenNewNotesListContext_AddNote_ShouldReturnTheNoteWithIdPropertyEquals1()
+        {
+            var expectedNote = new Note();
+
+            var context = new NotesListContext();
+
+            var actualNote = context.AddNote(expectedNote);
+
+            Assert.AreEqual(1, actualNote.Id);
+        }
     }
 }
