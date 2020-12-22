@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestNotes.Models;
+using System;
 using System.Collections.Generic;
 
 namespace RestNotes.Controllers
@@ -20,6 +21,18 @@ namespace RestNotes.Controllers
         public IEnumerable<Note> GetNotes()
         {
             return notesContext.ListAllNotes();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Note> GetNote(int id)
+        {
+            try
+            {
+                return notesContext.GetNote(id); 
+            } catch // if the context throws any exception, the note can't be found anyways
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]

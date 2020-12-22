@@ -6,6 +6,8 @@ namespace RestNotes.Models
     {
         Note AddNote(Note note);
 
+        Note GetNote(int id);
+
         IEnumerable<Note> ListAllNotes();
     }
 }

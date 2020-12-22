@@ -1,7 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestNotes.Controllers;
 using RestNotes.Models;
+using System;
 using System.Collections.Generic;
 
 namespace RestNotesTests.Tests.Controllers
@@ -50,7 +53,35 @@ namespace RestNotesTests.Tests.Controllers
 
             var actualResult = notesController.PostNote(new Note());
 
-            Assert.AreEqual(201, actualResult.StatusCode);
+            Assert.AreEqual(StatusCodes.Status201Created, actualResult.StatusCode);
+        }
+
+        [TestMethod()]
+        public void GetNote_WithValidId_Return_CorrespondingNote()
+        {
+            const int validId = 1;
+
+            var expectedNote = new Note { Text = "Expected" };
+            var notesContextMock = Mock.Of<INotesContext>(m => m.GetNote(validId) == expectedNote);
+
+            var notesController = new NotesController(notesContextMock);
+
+            var actualResult = notesController.GetNote(validId);
+
+            Assert.AreSame(expectedNote, actualResult.Value);
+        }
+
+        [TestMethod()]
+        public void GetNote_WhenContextThrowsException_Return_NotFound()
+        {
+            var notesContextMock = new Mock<INotesContext>(MockBehavior.Loose);
+            notesContextMock.Setup(m => m.GetNote(It.IsAny<int>())).Throws<Exception>();
+
+            var notesController = new NotesController(notesContextMock.Object);
+
+            var actualResult = (NotFoundResult)notesController.GetNote(It.IsAny<int>()).Result;
+
+            Assert.AreEqual(StatusCodes.Status404NotFound, actualResult.StatusCode);
         }
     }
 }
