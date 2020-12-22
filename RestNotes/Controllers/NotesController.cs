@@ -37,11 +37,11 @@ namespace RestNotes.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public CreatedResult PostNote(Note note)
+        public CreatedAtActionResult PostNote(Note note)
         {
             note = notesContext.AddNote(note);
 
-            return Created(string.Empty, note);
+            return CreatedAtAction(nameof(GetNote),new { id = note.Id }, note);
         }
     }
 }

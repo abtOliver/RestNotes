@@ -57,6 +57,19 @@ namespace RestNotesTests.Tests.Controllers
         }
 
         [TestMethod()]
+        public void PostNote_Return_Action_GetNote()
+        {
+            var expectedNote = new Note { Text = "Expected" };
+            var notesContextMock = Mock.Of<INotesContext>(m => m.AddNote(It.IsAny<Note>()) == expectedNote);
+
+            var notesController = new NotesController(notesContextMock);
+
+            var actualResult = notesController.PostNote(new Note());
+
+            Assert.AreEqual(nameof(NotesController.GetNote), actualResult.ActionName);
+        }
+
+        [TestMethod()]
         public void GetNote_WithValidId_Return_CorrespondingNote()
         {
             const int validId = 1;
