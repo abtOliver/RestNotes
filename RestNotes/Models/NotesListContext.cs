@@ -18,6 +18,11 @@ namespace RestNotes.Models
             return note;
         }
 
+        public void SaveNote(Note note)
+        {
+            notes[note.Id - 1] = note;
+        }
+
         public Note GetNote(int id)
         {
             return notes[id - 1];

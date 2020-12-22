@@ -56,5 +56,19 @@ namespace RestNotesTests.Tests.Models
 
             Assert.AreEqual(1, actualNote.Id);
         }
+
+        [TestMethod]
+        public void GivenFilledNotesListContext_SaveNote_WithId1_ShouldUpdateTheNote()
+        {
+            const string expected = "Updated";
+            
+            var context = new NotesListContext();
+            context.AddNote(new Note());
+
+            context.SaveNote(new Note { Id = 1, Text = expected });
+
+            var actualNote = context.GetNote(1);
+            Assert.AreEqual(expected, actualNote.Text);
+        }
     }
 }
