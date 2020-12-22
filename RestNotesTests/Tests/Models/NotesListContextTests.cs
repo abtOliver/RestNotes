@@ -45,5 +45,16 @@ namespace RestNotesTests.Tests.Models
 
             Assert.AreEqual(1, actualNote.Id);
         }
+
+        [TestMethod]
+        public void GivenFilledNotesListContext_GetNote_WithId1_ShouldReturnTheNoteWithIdPropertyEquals1()
+        {
+            var context = new NotesListContext();
+            context.AddNote(new Note());
+
+            var actualNote = context.GetNote(1);
+
+            Assert.AreEqual(1, actualNote.Id);
+        }
     }
 }

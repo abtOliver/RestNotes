@@ -18,6 +18,11 @@ namespace RestNotes.Models
             return note;
         }
 
+        public Note GetNote(int id)
+        {
+            return notes[id - 1];
+        }
+
         public IEnumerable<Note> ListAllNotes()
         {
             return notes;
