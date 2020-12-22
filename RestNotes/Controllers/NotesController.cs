@@ -25,6 +25,7 @@ namespace RestNotes.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Note> GetNote(int id)
         {
             try
