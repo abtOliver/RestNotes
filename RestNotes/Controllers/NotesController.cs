@@ -24,6 +24,7 @@ namespace RestNotes.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Note> GetNote(int id)
         {
             try
@@ -42,6 +43,33 @@ namespace RestNotes.Controllers
             note = notesContext.AddNote(note);
 
             return CreatedAtAction(nameof(GetNote),new { id = note.Id }, note);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult PutNote(int id, Note note)
+        {
+            if (note.Id == 0)
+            {
+                note.Id = id;
+            }
+            else if (note.Id != id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                notesContext.SaveNote(note);
+
+                return NoContent();
+            }
+            catch  // if the context throws any exception, the note can't be found for update anyways
+            {
+                return NotFound();
+            }
         }
     }
 }

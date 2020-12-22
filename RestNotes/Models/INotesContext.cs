@@ -8,6 +8,8 @@ namespace RestNotes.Models
 
         Note GetNote(int id);
 
+        void SaveNote(Note note);
+
         IEnumerable<Note> ListAllNotes();
     }
 }
