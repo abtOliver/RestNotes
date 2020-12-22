@@ -9,11 +9,6 @@ namespace RestNotes.Models
     {
         readonly List<Note> notes = new List<Note>();
 
-        public IEnumerable<Note> ListAllNotes()
-        {
-            return notes;
-        }
-
         public Note AddNote(Note note)
         {
             notes.Add(note);
@@ -21,6 +16,11 @@ namespace RestNotes.Models
             note.Id = notes.IndexOf(note) + 1;
 
             return note;
+        }
+
+        public IEnumerable<Note> ListAllNotes()
+        {
+            return notes;
         }
     }
 }

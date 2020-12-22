@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RestNotes.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace RestNotes
 {
